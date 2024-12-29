@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phát hiện lỗi cảm biến IoT</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #fefcea, #f1daff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px 50px;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 800px;
+        }
+
+        h1 {
+            color: #5a189a;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .devices {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .device {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            border: 2px solid rgba(90, 24, 154, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .device:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .device h3 {
+            color: #6a0572;
+            margin-bottom: 10px;
+        }
+
+        .device p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .device a {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background: #5a189a;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .device a:hover {
+            background: #370665;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Phát hiện lỗi cảm biến IoT</h1>
+        <p>Phân tích dữ liệu từ các thiết bị IoT để phát hiện bất thường và ngăn chặn sự cố.</p>
+        <div class="devices">
+            <!-- Cảm biến Nhiệt độ -->
+            <div class="device">
+                <h3>Cảm biến Nhiệt độ</h3>
+                <p>Phát hiện nhiệt độ quá cao hoặc bất thường trong hoạt động của thiết bị.</p>
+                <a href="/analyze_temperature_form">Phân tích</a>
+            </div>
+
+            <!-- Cảm biến Ánh sáng -->
+            <div class="device">
+                <h3>Cảm biến Ánh sáng</h3>
+                <p>Phát hiện lỗi khi dữ liệu ánh sáng vượt ngưỡng hoặc không chính xác.</p>
+                <a href="/analyze_light_form">Phân tích</a>
+            </div>
+
+            <!-- Cảm biến Độ ẩm -->
+            <div class="device">
+                <h3>Cảm biến Độ ẩm</h3>
+                <p>Phân tích độ ẩm không khí để phát hiện các điểm bất thường.</p>
+                <a href="/analyze_humidity_form">Phân tích</a>
+            </div>
+
+            <!-- Cảm biến Khí -->
+            <div class="device">
+                <h3>Cảm biến Khí</h3>
+                <p>Phát hiện rò rỉ khí hoặc bất thường trong cảm biến đo khí.</p>
+                <a href="/analyze_gas">Phân tích</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Weather Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #fefcea, #f1daff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #5a189a;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 100%;
+            box-sizing: border-box;
+            max-height: 50px;
+        }
+
+        button {
+            background-color: #5a189a;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #370665;
+        }
+
+        select option {
+            padding: 5px 10px;
+        }
+
+        select:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container ">
+        <h1>Lấy dữ liệu thời tiết</h1>
+        <form action="/analyze_temperature" method="post">
+            <label for="city">Chọn thành phố:</label>
+            <select id="city" name="city" size="5" required style="max-height: 150px; overflow-y: auto;">
+                <optgroup label="Việt Nam">
+                    <option value="Hanoi">Hà Nội</option>
+                    <option value="Ho Chi Minh">Hồ Chí Minh</option>
+                    <option value="Da Nang">Đà Nẵng</option>
+                    <option value="Hue">Huế</option>
+                </optgroup>
+                <optgroup label="Châu Á">
+                    <option value="Tokyo">Tokyo</option>
+                    <option value="Seoul">Seoul</option>
+                    <option value="Bangkok">Bangkok</option>
+                    <option value="Singapore">Singapore</option>
+                </optgroup>
+                <optgroup label="Châu Âu">
+                    <option value="Paris">Paris</option>
+                    <option value="London">London</option>
+                    <option value="Berlin">Berlin</option>
+                    <option value="Madrid">Madrid</option>
+                </optgroup>
+                <optgroup label="Châu Mỹ">
+                    <option value="New York">New York</option>
+                    <option value="Los Angeles">Los Angeles</option>
+                    <option value="Mexico City">Mexico City</option>
+                    <option value="Sao Paulo">Sao Paulo</option>
+                </optgroup>
+                <optgroup label="Châu Úc">
+                    <option value="Sydney">Sydney</option>
+                    <option value="Melbourne">Melbourne</option>
+                    <option value="Auckland">Auckland</option>
+                </optgroup>
+                <optgroup label="Châu Phi">
+                    <option value="Cairo">Cairo</option>
+                    <option value="Johannesburg">Johannesburg</option>
+                    <option value="Nairobi">Nairobi</option>
+                </optgroup>
+            </select>
+            
+            <label for="method">Chọn phương pháp:</label>
+            <select id="method" name="method">
+                <option value="isolation_forest">Isolation Forest</option>
+                <option value="dbscan">DBSCAN</option>
+                <option value="autoencoder">Autoencoder</option>
+            </select>
+            
+            <button type="submit">Lấy dữ liệu</button>
+        </form>
+        <a href="/">Quay lại</a>
+
+    </div>
+</body>
+</html>

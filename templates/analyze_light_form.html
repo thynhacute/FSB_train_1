@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload File</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #fefcea, #f1daff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #5a189a;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, select, button {
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #5a189a;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #370665;
+        }
+
+        input[type="file"] {
+            background: #fff;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        select option {
+            padding: 5px 10px;
+        }
+
+        select:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tải lên File CSV</h1>
+        <form action="/upload_light" method="post" enctype="multipart/form-data">
+            <label for="file">Chọn file CSV:</label>
+            <input type="file" id="file" name="file" accept=".csv" required>
+            
+            <label for="method">Chọn phương pháp:</label>
+            <select id="method" name="method">
+                <option value="isolation_forest">Isolation Forest</option>
+                <option value="dbscan">DBSCAN</option>
+                <option value="autoencoder">Autoencoder</option>
+            </select>
+            
+            <button type="submit">Tải lên và phân tích</button>
+        </form>
+        <a href="/">Quay lại</a>
+    </div>
+</body>
+</html>
