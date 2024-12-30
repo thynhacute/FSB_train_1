@@ -5,5 +5,4 @@ requests
 matplotlib
 plotly
 keras
-urllib
 requests
