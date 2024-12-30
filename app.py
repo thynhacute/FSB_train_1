@@ -1,14 +1,18 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file, session, redirect, url_for, flash
+import os
+import pandas as pd
+from werkzeug.utils import secure_filename
 from src.preprocess import process_data
 from src.detect_anomalies import detect_isolation_forest, detect_dbscan, detect_autoencoder
 from src.fetch_web_data import fetch_weather_data
 from src.visualization import plot_anomalies_interactive
-import os
-import pandas as pd
-from werkzeug.utils import secure_filename
-
+from src.mock_vibration_data import generate_mock_vibration_data
+from src.anomaly_detection import detect_anomalies_with_iforest, detect_device_failure
+from src.auth import auth
+from src.auth import login_required
 app = Flask(__name__)
-
+app.register_blueprint(auth)
+app.secret_key = 'your_secret_key_here'
 UPLOAD_FOLDER = 'data'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -16,7 +20,8 @@ UPLOAD_FOLDERs = 'uploads'
 os.makedirs(UPLOAD_FOLDERs, exist_ok=True)
 app.config['UPLOAD_FOLDERs'] = UPLOAD_FOLDERs
 
-
+data = generate_mock_vibration_data(num_samples=20)
+ 
 METHOD_DESCRIPTIONS = {
     'isolation_forest': "Isolation Forest sử dụng cây quyết định để xác định các điểm bất thường dựa trên độ xa lạ.",
     'dbscan': "DBSCAN nhóm dữ liệu theo mật độ. Các điểm dữ liệu không thuộc nhóm nào được đánh dấu là bất thường.",
@@ -29,15 +34,20 @@ def process_anomalies(data):
     """
     data['timestamp'] = pd.to_datetime(data['timestamp']).dt.strftime('%Y-%m-%d %H:%M:%S')
     return data
+from functools import wraps
+
 
 @app.route('/')
+@login_required
 def index():
     """
     Trang chính, hiển thị các lựa chọn nhập dữ liệu IoT.
     """
     return render_template('index_sensors.html')
 
+
 @app.route('/analyze_temperature', methods=['POST'])
+@login_required
 def analyze_temperature():
     city = request.form['city']
     method = request.form['method']
@@ -126,6 +136,7 @@ def add_status_column(results):
     return results
 
 @app.route('/analyze_light', methods=['POST'])
+@login_required
 def analyze_light():
     """
     Phân tích dữ liệu cảm biến ánh sáng (từ file CSV).
@@ -167,6 +178,7 @@ def analyze_light():
         return f"Lỗi: Không thể phân tích dữ liệu cảm biến ánh sáng. Chi tiết lỗi: {e}"
 
 @app.route('/analyze_temperature_form', methods=['GET'])
+@login_required
 def analyze_temperature_form():
     """
     Hiển thị form nhập thành phố và phương pháp phát hiện bất thường (nhiệt độ).
@@ -174,13 +186,22 @@ def analyze_temperature_form():
     return render_template('analyze_temperature_form.html')
 
 @app.route('/analyze_light_form', methods=['GET'])
+@login_required
 def analyze_light_form():
     """
     Hiển thị form tải lên file CSV (ánh sáng, độ ẩm, khí, v.v.).
     """
     return render_template('analyze_light_form.html')
-
+@app.route('/download-sample', methods=['GET'])
+@login_required
+def download_sample():
+    """
+    Endpoint cho phép tải file CSV mẫu.
+    """
+    file_path = 'data/template_sample.csv'  # Đường dẫn tới file mẫu
+    return send_file(file_path, as_attachment=True)
 @app.route('/view_chart', methods=['GET'])
+@login_required
 def view_chart():
     """
     Hiển thị biểu đồ tương tác.
@@ -204,6 +225,7 @@ def view_chart():
     </html>
     """
 @app.route('/upload_light', methods=['GET', 'POST'])
+@login_required
 def upload_light():
     if request.method == 'POST':
         if 'file' not in request.files:
@@ -261,5 +283,33 @@ def upload_light():
             )
 
     return render_template('upload_light.html')
+
+@app.route('/data', methods=['GET'])
+@login_required
+def get_data():
+    """
+    API trả về dữ liệu rung động và trạng thái lỗi.
+    """
+    global data
+    data = detect_anomalies_with_iforest(data, contamination=0.3)  
+    data = detect_device_failure(data, anomaly_threshold=2, rolling_window=2)
+    
+    data['timestamp'] = pd.to_datetime(data['timestamp'], errors='coerce')
+    
+    # Định dạng timestamp thành chuỗi thời gian thực
+    data['timestamp'] = data['timestamp'].dt.strftime('%Y-%m-%d %H:%M:%S')
+    
+    # Trả về dữ liệu JSON
+    return data.to_json(orient='records')
+
+
+@app.route('/vibration_dashboard')
+@login_required
+def vibration_dashboard():
+    """
+    Hiển thị giao diện bảng dữ liệu rung động.
+    """
+    return render_template('vibration_dashboard.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
