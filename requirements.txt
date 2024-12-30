@@ -4,5 +4,6 @@ scikit-learn
 requests
 matplotlib
 plotly
-functools
 keras
+urllib
+requests
