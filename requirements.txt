@@ -6,3 +6,4 @@ matplotlib
 plotly
 keras
 requests
+tensorflow
