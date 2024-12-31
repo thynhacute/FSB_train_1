@@ -25,7 +25,6 @@
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
             max-width: 400px;
             width: 100%;
-            font-size: 14px;
         }
 
         h1 {
@@ -77,6 +76,9 @@
         select option {
             padding: 5px 10px;
         }
+        .name-title{
+            font-size: 30px;
+        }
 
         select:focus {
             outline: none;
@@ -104,6 +106,7 @@
             text-decoration: none;
             transition: background-color 0.3s ease;
             flex: 1;
+            width: 120px;
         }
 
         .dual-button a:hover {
@@ -127,29 +130,32 @@
         .inline-label a:hover {
             text-decoration: underline;
         }
+        .choose-method{
+            text-align: left;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Tải lên File CSV</h1>
+        <h1 class="name-title">Upload CSV File</h1>
         <form action="/upload_light" method="post" enctype="multipart/form-data">
             <div class="inline-label">
-                <label for="file">Chọn file CSV:</label>
-                <a href="/download-sample">Tải file mẫu CSV</a>
+                <label for="file">Select CSV File:</label>
+                <a href="/download-sample">Download Sample CSV File</a>
             </div>
             <input type="file" id="file" name="file" accept=".csv" required>
 
-            <label for="method">Chọn phương pháp:</label>
+            <label class="choose-method" for="method">Choose Method:</label>
             <select id="method" name="method">
                 <option value="isolation_forest">Isolation Forest</option>
                 <option value="dbscan">DBSCAN</option>
                 <option value="autoencoder">Autoencoder</option>
             </select>
 
-            <button type="submit">Tải lên và phân tích</button>
+            <button class="small-button" type="submit">Upload and Analyze</button>
         </form>
         <div class="dual-button">
-            <a href="/">Quay lại</a>
+            <a class="small-button" href="/">Back</a>
         </div>
     </div>
 </body>

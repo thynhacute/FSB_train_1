@@ -94,32 +94,42 @@
       .btn:hover {
         background-color: #e6398b;
       }
+      .text-start{
+        font-size: 15px;
+      }
+      .text-4xl{
+        text-align: left;
+        font-size: 12px;
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1 class="text-4xl">Kết quả phân tích</h1>
+      <h1 class="text-4xl">Analysis Results</h1>
       <div class="flex flex-col justify-start items-start">
-        <p>Thành phố: <strong>{{ city }}</strong></p>
-        <p>Phương pháp: <strong>{{ method }}</strong></p>
-        <p>
-          Số lượng bất thường phát hiện: <strong>{{ anomaly_count }}</strong>
+        <p style="font-size: 17px;">City: <strong>{{ city }}</strong></p>
+        <p style="font-size: 17px;">Method: <strong>{{ method }}</strong></p>
+        <p style="font-size: 17px;">
+          Number of Anomalies Detected: <strong>{{ anomaly_count }}</strong>
         </p>
 
-        <p>Dữ liệu được xem là đúng khi nằm trong phạm vi sau:</p>
+        <p style="font-size: 17px;">
+          Data is considered valid when it falls within the following range:
+        </p>
         <ul>
           <li>
-            <strong>Nhiệt độ:</strong> 20°C - 30°C (nhiệt độ phòng), hoặc -10°C
-            - 40°C (ngoài trời).
+            <strong>Temperature:</strong> 20°C - 30°C (room temperature), or
+            -10°C - 40°C (outdoor).
           </li>
           <li>
-            <strong>Độ ẩm:</strong> 30% - 60% (trong nhà) hoặc 20% - 80% (ngoài
-            trời).
+            <strong>Humidity:</strong> 30% - 60% (indoor) or 20% - 80%
+            (outdoor).
           </li>
         </ul>
-        <p>
-          Dữ liệu được đánh dấu là <strong>"bất thường"</strong> khi vượt ngoài
-          phạm vi trên.
+        <p style="font-size: 16px;">
+          Data is marked as <strong>'anomalous'</strong> when it falls outside
+          the above range.
         </p>
       </div>
       <div class="grid grid-cols-12 gap-6 mt-4">
@@ -128,11 +138,11 @@
           <table>
             <thead>
               <tr>
-                <th>Thời gian</th>
-                <th>Nhiệt độ</th>
-                <th>Độ ẩm</th>
-                <th>Trạng thái</th>
-                <th>Lý do bất thường</th>
+                <th>Time</th>
+                <th>Temperature</th>
+                <th>Humidity</th>
+                <th>Status</th>
+                <th>Reason for Anomaly</th>
               </tr>
             </thead>
             <tbody>
@@ -144,24 +154,24 @@
                 <td>
                   {% if anomaly['temperature'] < 20 or anomaly['temperature'] >
                   40 or anomaly['humidity'] < 20 or anomaly['humidity'] > 80 %}
-                  Bất thường {% else %} Bình thường {% endif %}
+                  Anomalous {% else %} Normal {% endif %}
                 </td>
                 <td>
-                  {% if anomaly['temperature'] < 20 %} Nhiệt độ {{
-                  anomaly['temperature'] }}°C < 20°C (quá thấp) {% elif
-                  anomaly['temperature'] > 40 %} Nhiệt độ {{
-                  anomaly['temperature'] }}°C > 40°C (quá cao) {% elif
-                  anomaly['humidity'] < 20 %} Độ ẩm {{ anomaly['humidity'] }}% <
-                  20% (quá khô) {% elif anomaly['humidity'] > 80 %} Độ ẩm {{
-                  anomaly['humidity'] }}% > 80% (quá ẩm) {% else %} Giá trị nằm
-                  trong phạm vi cho phép {% endif %}
+                  {% if anomaly['temperature'] < 20 %} Temperature {{
+                  anomaly['temperature'] }}°C < 20°C (too low) {% elif
+                  anomaly['temperature'] > 40 %} Temperature {{
+                  anomaly['temperature'] }}°C > 40°C (too high) {% elif
+                  anomaly['humidity'] < 20 %} Humidity {{ anomaly['humidity']
+                  }}% < 20% (too dry) {% elif anomaly['humidity'] > 80 %}
+                  Humidity {{ anomaly['humidity'] }}% > 80% (too humid) {% else
+                  %} Values are within the acceptable range {% endif %}
                 </td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
           {% else %}
-          <p>Không phát hiện bất thường nào.</p>
+          <p>No anomalies detected.</p>
           {% endif %}
         </div>
 
@@ -174,35 +184,38 @@
             background: #f9f9f9;
           "
         >
-          <h2>Phương pháp đã áp dụng</h2>
+          <h2>Applied Method</h2>
           <p class="text-start">{{ explanation }}</p>
-          <h3>Dữ liệu đầu vào:</h3>
+          <h2>Input Data:</h2>
           <ul>
             <li>
-              <strong>Loại dữ liệu:</strong> {{ data_type }} ({{ data_columns }}
-              cột, {{ data_rows }} hàng).
+              <strong>Data Type:</strong> {{ data_type }} ({{ data_columns }}
+              columns, {{ data_rows }} rows).
             </li>
             <li>
-              <strong>Các giá trị nổi bật:</strong> Nhiệt độ từ {{
-              min_temperature }}°C đến {{ max_temperature }}°C, Độ ẩm từ {{
-              min_humidity }}% đến {{ max_humidity }}%.
+              <strong>Key Values:</strong> Temperature ranges from {{
+              min_temperature }}°C to {{ max_temperature }}°C, Humidity ranges
+              from {{ min_humidity }}% to {{ max_humidity }}%.
             </li>
           </ul>
-          <h3>Dữ liệu đã xử lý:</h3>
+          <h2>Processed Data:</h2>
           <ul>
             <li>
-              <strong>Nhiệt độ hiện tại:</strong> {{ anomalies[0]['temperature']
-              }}°C
+              <strong>Current Temperature:</strong> {{
+              anomalies[0]['temperature'] }}°C
             </li>
             <li>
-              <strong>Độ ẩm hiện tại:</strong> {{ anomalies[0]['humidity'] }}%
+              <strong>Current Humidity:</strong> {{ anomalies[0]['humidity'] }}%
             </li>
-            <li><strong>Tổng số bất thường:</strong> {{ anomaly_count }}</li>
+            <li><strong>Total Anomalies:</strong> {{ anomaly_count }}</li>
           </ul>
         </div>
       </div>
-
-      <a href="/analyze_temperature_form" class="btn hover:bg-white hover:text-purple-700">Quay lại</a>
+      <a
+        href="/"
+        class="btn hover:bg-white hover:text-purple-700"
+        >Back to Home</a
+      >
     </div>
   </body>
 </html>

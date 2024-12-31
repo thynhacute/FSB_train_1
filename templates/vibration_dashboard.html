@@ -28,149 +28,163 @@
       }
       .button-container {
         margin-top: 30px;
-    }
+      }
 
-    .button-container {
-      margin-top: 30px;
-      display: flex;
-      justify-content: center;
-  }
+      .button-container {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+      }
 
-  .button-container a {
-      text-decoration: none;
-      color: white;
-      background: #5a189a;
-      padding: 10px 20px;
-      border-radius: 5px;
-      font-weight: bold;
-      transition: background 0.3s;
-  }
+      .button-container a {
+        text-decoration: none;
+        color: white;
+        background: #5a189a;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background 0.3s;
+      }
 
-  .button-container a:hover {
-      background: #370665;
-  }
+      .button-container a:hover {
+        background: #370665;
+      }
     </style>
   </head>
   <body class="p-10">
     <h1 style="text-align: center" class="text-3xl font-semibold">
-      Dữ liệu Cảm biến Rung động
+      Vibration Sensor Data
     </h1>
-    <p><strong>Bất thường:</strong> <span id="anomaly-count">0</span></p>
-    <p><strong>Bình thường:</strong> <span id="normal-count">0</span></p>
-    <p><strong>Lỗi:</strong> <span id="failure-count">0</span></p>
-   
+    <p><strong>Anomalies:</strong> <span id="anomaly-count">0</span></p>
+    <p><strong>Normal:</strong> <span id="normal-count">0</span></p>
+    <p><strong>Failures:</strong> <span id="failure-count">0</span></p>
     <div class="grid grid-cols-12 gap-6 mt-7">
-        <div class="col-span-9"> 
-            <table class="bg-white">
-                <thead>
-                  <tr>
-                    <th>Timestamp</th>
-                    <th>Vibration</th>
-                    <th>Anomaly</th>
-                    <th>Failure</th>
-                  </tr>
-                </thead>
-                <tbody id="data-table">
-                  <!-- Dữ liệu sẽ được thêm bằng JavaScript -->
-                </tbody>
-              </table>
-        </div>
-        <div class="col-span-3 h-fit bg-white p-5 rounded-xl shadow-xl">
-            <h2 class="text-2xl font-semibold">Chú thích</h2>
-            <ul style="list-style-type: disc; margin-left: 20px;">
-                <li><strong>Bất thường:</strong> Một giá trị được coi là bất thường nếu nó vượt quá ngưỡng xác định bởi thuật toán Isolation Forest. Các giá trị rung động quá lớn (ví dụ: > 5.0 m/s²) thường được đánh dấu là bất thường.</li>
-                <li><strong>Bình thường:</strong> Các giá trị không được đánh dấu là bất thường.</li>
-                <li><strong>Lỗi:</strong> Một thiết bị được coi là lỗi nếu có một chuỗi các bất thường liên tiếp vượt qua ngưỡng. Ví dụ: ít nhất 2 bất thường liên tiếp trong cửa sổ thời gian 2 phút.</li>
-            </ul>
-            <p><strong>Chú ý:</strong> Dữ liệu được phân tích tự động bằng thuật toán Isolation Forest và kiểm tra chuỗi bất thường liên tiếp để xác định lỗi thiết bị.</p>
-        </div>
+      <div class="col-span-9">
+        <table class="bg-white">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Vibration</th>
+              <th>Anomaly</th>
+              <th>Failure</th>
+            </tr>
+          </thead>
+          <tbody id="data-table">
+            <!-- Dữ liệu sẽ được thêm bằng JavaScript -->
+          </tbody>
+        </table>
+      </div>
+      <div class="col-span-3 h-fit bg-white p-5 rounded-xl shadow-xl">
+        <h2 class="text-2xl font-semibold">Notes</h2>
+        <ul style="list-style-type: disc; margin-left: 20px">
+          <li>
+            <strong>Anomalies:</strong> A value is considered anomalous if it
+            exceeds the threshold defined by the Isolation Forest algorithm.
+            High vibration values (e.g., > 5.0 m/s²) are typically marked as
+            anomalies.
+          </li>
+          <li>
+            <strong>Normal:</strong> Values that are not marked as anomalies.
+          </li>
+          <li>
+            <strong>Failures:</strong> A device is considered to have failed if
+            there is a sequence of consecutive anomalies exceeding the
+            threshold. For example, at least 2 consecutive anomalies within a
+            2-minute time window.
+          </li>
+        </ul>
+        <p>
+          <strong>Note:</strong> Data is automatically analyzed using the
+          Isolation Forest algorithm and checked for consecutive anomaly
+          sequences to identify device failures.
+        </p>
+      </div>
     </div>
-    <div style="width: 100%; margin: 20px auto;" class="bg-white">
-        <canvas id="vibrationChart"></canvas>
+    <div style="width: 100%; margin: 20px auto" class="bg-white">
+      <canvas id="vibrationChart"></canvas>
     </div>
-    
+
     <div class="button-container">
-      <a href="/">Về Trang Chủ</a>
-  </div>
-    
+      <a href="/">Back to Home</a>
+    </div>
+
     <script>
-        async function fetchData() {
-            const response = await fetch('/data');
-            const data = await response.json();
-            const table = document.getElementById('data-table');
-    
-            // Tính toán tổng quan
-            const anomalyCount = data.filter(row => row.anomaly === 1).length;
-            const failureCount = data.filter(row => row.failure === 1).length;
-            const normalCount = data.length - anomalyCount;
-    
-            // Hiển thị thông số tổng quan
-            document.getElementById('anomaly-count').textContent = anomalyCount;
-            document.getElementById('normal-count').textContent = normalCount;
-            document.getElementById('failure-count').textContent = failureCount;
-    
-            // Cập nhật bảng dữ liệu
-            table.innerHTML = '';
-            data.forEach(row => {
-                const tr = document.createElement('tr');
-                tr.className = row.failure === 1 ? 'failure' : '';
-                tr.innerHTML = `
+      async function fetchData() {
+        const response = await fetch("/data");
+        const data = await response.json();
+        const table = document.getElementById("data-table");
+
+        // Tính toán tổng quan
+        const anomalyCount = data.filter((row) => row.anomaly === 1).length;
+        const failureCount = data.filter((row) => row.failure === 1).length;
+        const normalCount = data.length - anomalyCount;
+
+        // Hiển thị thông số tổng quan
+        document.getElementById("anomaly-count").textContent = anomalyCount;
+        document.getElementById("normal-count").textContent = normalCount;
+        document.getElementById("failure-count").textContent = failureCount;
+
+        // Cập nhật bảng dữ liệu
+        table.innerHTML = "";
+        data.forEach((row) => {
+          const tr = document.createElement("tr");
+          tr.className = row.failure === 1 ? "failure" : "";
+          tr.innerHTML = `
                     <td>${row.timestamp}</td>
                     <td>${row.vibration.toFixed(2)}</td>
-                    <td>${row.anomaly === 1 ? 'Bất thường' : 'Bình thường'}</td>
-                    <td>${row.failure === 1 ? 'Lỗi' : 'Không lỗi'}</td>
+                    <td>${row.anomaly === 1 ? "Bất thường" : "Bình thường"}</td>
+                    <td>${row.failure === 1 ? "Lỗi" : "Không lỗi"}</td>
                 `;
-                table.appendChild(tr);
-            });
-    
-            // Vẽ biểu đồ
-            const ctx = document.getElementById('vibrationChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: data.map(row => row.timestamp),
-                    datasets: [
-                        {
-                            label: 'Vibration (m/s²)',
-                            data: data.map(row => row.vibration),
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            tension: 0.1,
-                        }
-                    ]
+          table.appendChild(tr);
+        });
+
+        // Vẽ biểu đồ
+        const ctx = document.getElementById("vibrationChart").getContext("2d");
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: data.map((row) => row.timestamp),
+            datasets: [
+              {
+                label: "Vibration (m/s²)",
+                data: data.map((row) => row.vibration),
+                borderColor: "rgba(75, 192, 192, 1)",
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                tension: 0.1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+              },
+            },
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: "Thời gian",
                 },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top',
-                        }
-                    },
-                    scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Thời gian'
-                            },
-                            ticks: {
-                                maxRotation: 90,
-                                minRotation: 45
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Rung động (m/s²)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-    
-        fetchData();
+                ticks: {
+                  maxRotation: 90,
+                  minRotation: 45,
+                },
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: "Rung động (m/s²)",
+                },
+              },
+            },
+          },
+        });
+      }
+
+      fetchData();
     </script>
-    
   </body>
 </html>

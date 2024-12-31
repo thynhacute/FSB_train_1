@@ -70,23 +70,23 @@ def analyze_temperature():
         if method == 'isolation_forest':
             results = detect_isolation_forest(data)
             explanation = (
-                "Isolation Forest sử dụng cây quyết định để xác định các điểm cách biệt dựa trên độ xa lạ "
-                "so với phần còn lại của tập dữ liệu."
+                "Isolation Forest uses decision trees to identify outliers based on their isolation compared to the "
+        "rest of the dataset."
             )
         elif method == 'dbscan':
             results = detect_dbscan(data)
             explanation = (
-                "DBSCAN nhóm dữ liệu theo mật độ. Các điểm dữ liệu không thuộc bất kỳ cụm nào được đánh dấu "
-                "là bất thường."
+                "DBSCAN clusters data based on density. Data points that do not belong to any cluster are marked "
+        "as anomalies."
             )
         elif method == 'autoencoder':
             results = detect_autoencoder(data)
             explanation = (
-                "Autoencoder là một mạng nơ-ron huấn luyện để tái tạo dữ liệu. Điểm nào có lỗi tái tạo cao "
-                "được đánh dấu là bất thường."
+                "An Autoencoder is a neural network trained to reconstruct data. Points with high reconstruction "
+        "errors are marked as anomalies."
             )
         else:
-            explanation = "Phương pháp không xác định."
+            explanation = "Undefined method."
 
         # Xử lý dữ liệu bất thường
         results = add_status_column(results)
