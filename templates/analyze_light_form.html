@@ -25,6 +25,7 @@
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
             max-width: 400px;
             width: 100%;
+            font-size: 14px;
         }
 
         h1 {
@@ -80,8 +81,51 @@
         select:focus {
             outline: none;
         }
-        a{
+
+        a {
             text-decoration: none;
+            color: inherit;
+        }
+
+        .dual-button {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .dual-button a {
+            margin-top: 10px;
+            background-color: #5a189a;
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            flex: 1;
+        }
+
+        .dual-button a:hover {
+            background-color: #370665;
+        }
+
+        .inline-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .inline-label a {
+            font-size: 0.9rem;
+            color: #5a189a;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        .inline-label a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -89,20 +133,24 @@
     <div class="container">
         <h1>Tải lên File CSV</h1>
         <form action="/upload_light" method="post" enctype="multipart/form-data">
-            <label for="file">Chọn file CSV:</label>
+            <div class="inline-label">
+                <label for="file">Chọn file CSV:</label>
+                <a href="/download-sample">Tải file mẫu CSV</a>
+            </div>
             <input type="file" id="file" name="file" accept=".csv" required>
-            
+
             <label for="method">Chọn phương pháp:</label>
             <select id="method" name="method">
                 <option value="isolation_forest">Isolation Forest</option>
                 <option value="dbscan">DBSCAN</option>
                 <option value="autoencoder">Autoencoder</option>
             </select>
-            
+
             <button type="submit">Tải lên và phân tích</button>
         </form>
-        <a href="/">Quay lại</a>
-        <p><a href="/download-sample" class="text-blue-600">Tải file mẫu CSV</a></p>
+        <div class="dual-button">
+            <a href="/">Quay lại</a>
+        </div>
     </div>
 </body>
 </html>

@@ -1,81 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng nhập</title>
+    <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="../static/style/login.css" />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
     <div class="overlay">
-      <!-- LOGN IN FORM by Omar Dsoky -->
-      <form method="post" action="/login">
-        <!--   con = Container  for items in the form-->
-        <div class="con">
-          <!--     Start  header Content  -->
-          <header class="head-form">
-            <h2>Log In</h2>
-            <!--     A welcome message or an explanation of the login form -->
-            <p>login here using your username and password</p>
-          </header>
-          <!--     End  header Content  -->
-          <br />
-          <div class="field-set">
-            <!--   user name -->
-            <span class="input-item">
-              <i class="fa fa-user-circle"></i>
-            </span>
-            <!--   user name Input-->
-            <input
-              class="form-input"
-              id="username"
-              name="username"
-              type="text"
-              placeholder="@UserName"
-              required
-            />
-
-            <br />
-
-            <!--   Password -->
-
-            <span class="input-item">
-              <i class="fa fa-key"></i>
-            </span>
-            <!--   Password Input-->
-            <input
-              class="form-input"
-              type="password"
-              placeholder="Password"
-              id="password"
-              name="password"
-              required
-            />
-
-            <!--      Show/hide password  -->
-            <span>
-              <i
-                class="fa fa-eye"
-                aria-hidden="true"
-                type="button"
-                id="eye"
-              ></i>
-            </span>
-
-            <br />
-            <!--        buttons -->
-            <!--      button LogIn -->
-            <button type="submit" class="log-in">Log In</button>
-          </div>
-        </div>
-
-        <!-- End Form -->
-      </form>
+        <form method="post" action="/login">
+            <div class="con">
+                <header class="head-form">
+                    <h2>Login</h2>
+                    <p>Login to continue</p>
+                </header>
+                <div class="field-set">
+                    <!-- Username -->
+                    <div class="input-container">
+                        <label for="username" class="input-label">Username</label>
+                        <span class="input-item">
+                            <i class="fa fa-user-circle"></i>
+                        </span>
+                        <input class="form-input" id="username" name="username" type="text" placeholder="Tên đăng nhập" required />
+                    </div>
+                    <!-- Password -->
+                    <div class="input-container">
+                        <label for="password" class="input-label">Password</label>
+                        <input class="form-input" type="password" placeholder="Mật khẩu" id="password" name="password" required />
+                        <span class="toggle-password">
+                            <i class="fa fa-eye" aria-hidden="true" id="eye"></i>
+                        </span>
+                    </div>
+                    <!-- Login Button -->
+                    <button type="submit" class="log-in">Đăng nhập</button>
+                </div>
+            </div>
+        </form>
     </div>
-    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
-  </body>
+    <script>
+        // JavaScript to toggle password visibility
+        const passwordInput = document.getElementById("password");
+        const togglePassword = document.getElementById("eye");
+
+        togglePassword.addEventListener("click", () => {
+            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+            passwordInput.setAttribute("type", type);
+            togglePassword.classList.toggle("fa-eye-slash");
+        });
+    </script>
+</body>
 </html>

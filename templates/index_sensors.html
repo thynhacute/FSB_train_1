@@ -25,6 +25,7 @@
         box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         width: 90%;
         max-width: 800px;
+        font-size: 14px;
       }
 
       h1 {
@@ -86,6 +87,9 @@
       .device a:hover {
         background: #370665;
       }
+      .btn-vib{
+        margin-top: 20px;
+      }
     </style>
   </head>
   <body>
@@ -93,40 +97,27 @@
       <a href="/logout" style="text-decoration:none; position:absolute; top:10px ;right:10px ; background:white ; padding:8px 20px ; border-radius:8px;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">Đăng xuất</a>
     </div>
     <div class="container">
-      <h1>Phát hiện lỗi cảm biến IoT</h1>
+      <h1>Anomaly Detection in Sensor Data</h1>
       <p>
-        Phân tích dữ liệu từ các thiết bị IoT để phát hiện bất thường và ngăn
-        chặn sự cố.
+        Analyzing Data from IoT Devices to Detect Anomalies and Prevent Failures
       </p>
       <div class="devices">
         <!-- Cảm biến Nhiệt độ -->
         <div class="device">
-          <h3>Cảm biến Nhiệt, Ẩm</h3>
+          <h3>Temperature and Humidity Sensors</h3>
           <p>
-            Phát hiện nhiệt độ quá cao hoặc bất thường trong hoạt động của thiết
-            bị.Theo vùng mọi người chọn
+            Detecting Excessive or Abnormal Temperatures in Device Operations based on the selected region
           </p>
-          <a href="/analyze_temperature_form">Phân tích</a>
+          <a href="/analyze_temperature_form">OpenWeatherApp API</a>
+          <a href="/analyze_light_form">Upload CSV</a>
         </div>
-
-        <!-- Cảm biến Ánh sáng -->
-        <div class="device">
-          <h3>Cảm biến Nhiệt, Ẩm</h3>
-          <p>
-            Phát hiện nhiệt độ quá cao hoặc bất thường trong hoạt động của thiết
-            bị.Theo vùng mọi người tùy chọn
-          </p>
-          <a href="/analyze_light_form">Phân tích</a>
-        </div>
-
         <!-- Cảm biến Độ ẩm -->
         <div class="device">
-          <h3>Cảm biến Rung động</h3>
+          <h3>Vibration Sensor</h3>
           <p>
-            Phân tích rung động để phát hiện các điểm bất thường của thiết bị và
-            môi trường .
+            Analyzing Vibrations to Detect Anomalies in Devices and the Environment
           </p>
-          <a href="/vibration_dashboard">Phân tích</a>
+          <a class="btn-vib" href="/vibration_dashboard">Analysis based on pre-set data metrics</a>
         </div>
 
         

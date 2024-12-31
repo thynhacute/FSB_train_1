@@ -26,6 +26,29 @@
       .failure {
         background-color: #ffcccc;
       }
+      .button-container {
+        margin-top: 30px;
+    }
+
+    .button-container {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+  }
+
+  .button-container a {
+      text-decoration: none;
+      color: white;
+      background: #5a189a;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background 0.3s;
+  }
+
+  .button-container a:hover {
+      background: #370665;
+  }
     </style>
   </head>
   <body class="p-10">
@@ -36,10 +59,9 @@
     <p><strong>Bình thường:</strong> <span id="normal-count">0</span></p>
     <p><strong>Lỗi:</strong> <span id="failure-count">0</span></p>
    
-    
     <div class="grid grid-cols-12 gap-6 mt-7">
         <div class="col-span-9"> 
-            <table class=" bg-white">
+            <table class="bg-white">
                 <thead>
                   <tr>
                     <th>Timestamp</th>
@@ -53,7 +75,7 @@
                 </tbody>
               </table>
         </div>
-        <div class="col-span-3 h-fit bg-white p-5 rounded-xl shadow-xl ">
+        <div class="col-span-3 h-fit bg-white p-5 rounded-xl shadow-xl">
             <h2 class="text-2xl font-semibold">Chú thích</h2>
             <ul style="list-style-type: disc; margin-left: 20px;">
                 <li><strong>Bất thường:</strong> Một giá trị được coi là bất thường nếu nó vượt quá ngưỡng xác định bởi thuật toán Isolation Forest. Các giá trị rung động quá lớn (ví dụ: > 5.0 m/s²) thường được đánh dấu là bất thường.</li>
@@ -66,6 +88,11 @@
     <div style="width: 100%; margin: 20px auto;" class="bg-white">
         <canvas id="vibrationChart"></canvas>
     </div>
+    
+    <div class="button-container">
+      <a href="/">Về Trang Chủ</a>
+  </div>
+    
     <script>
         async function fetchData() {
             const response = await fetch('/data');
@@ -99,16 +126,16 @@
             // Vẽ biểu đồ
             const ctx = document.getElementById('vibrationChart').getContext('2d');
             new Chart(ctx, {
-                type: 'line', // Kiểu biểu đồ: line (đường)
+                type: 'line',
                 data: {
-                    labels: data.map(row => row.timestamp), // Trục x: timestamp
+                    labels: data.map(row => row.timestamp),
                     datasets: [
                         {
-                            label: 'Vibration (m/s²)', // Nhãn dữ liệu
-                            data: data.map(row => row.vibration), // Trục y: vibration
-                            borderColor: 'rgba(75, 192, 192, 1)', // Màu đường
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Màu nền dưới đường
-                            tension: 0.1, // Làm mượt đường
+                            label: 'Vibration (m/s²)',
+                            data: data.map(row => row.vibration),
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            tension: 0.1,
                         }
                     ]
                 },

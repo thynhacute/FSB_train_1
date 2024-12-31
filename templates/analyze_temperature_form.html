@@ -25,6 +25,7 @@
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
             max-width: 400px;
             width: 100%;
+            font-size: 14px;
         }
 
         h1 {
@@ -81,56 +82,56 @@
 </head>
 <body>
     <div class="container ">
-        <h1>Lấy dữ liệu thời tiết</h1>
+        <h1>Fetch Weather Data from OpenWeatherApp</h1>
         <form action="/analyze_temperature" method="post">
-            <label for="city">Chọn thành phố:</label>
+            <label for="city">Select City:</label>
             <select id="city" name="city" size="5" required style="max-height: 150px; overflow-y: auto;">
-                <optgroup label="Việt Nam">
-                    <option value="Hanoi">Hà Nội</option>
-                    <option value="Ho Chi Minh">Hồ Chí Minh</option>
-                    <option value="Da Nang">Đà Nẵng</option>
-                    <option value="Hue">Huế</option>
+                <optgroup label="Vietnam">
+                    <option value="Hanoi">Ha Noi</option>
+                    <option value="Ho Chi Minh">Ho Chi Minh</option>
+                    <option value="Da Nang">Đa Nang</option>
+                    <option value="Hue">Hue</option>
                 </optgroup>
-                <optgroup label="Châu Á">
+                <optgroup label="Asia">
                     <option value="Tokyo">Tokyo</option>
                     <option value="Seoul">Seoul</option>
                     <option value="Bangkok">Bangkok</option>
                     <option value="Singapore">Singapore</option>
                 </optgroup>
-                <optgroup label="Châu Âu">
+                <optgroup label="Europe">
                     <option value="Paris">Paris</option>
                     <option value="London">London</option>
                     <option value="Berlin">Berlin</option>
                     <option value="Madrid">Madrid</option>
                 </optgroup>
-                <optgroup label="Châu Mỹ">
+                <optgroup label="America">
                     <option value="New York">New York</option>
                     <option value="Los Angeles">Los Angeles</option>
                     <option value="Mexico City">Mexico City</option>
                     <option value="Sao Paulo">Sao Paulo</option>
                 </optgroup>
-                <optgroup label="Châu Úc">
+                <optgroup label="Oceania">
                     <option value="Sydney">Sydney</option>
                     <option value="Melbourne">Melbourne</option>
                     <option value="Auckland">Auckland</option>
                 </optgroup>
-                <optgroup label="Châu Phi">
+                <optgroup label="Africa">
                     <option value="Cairo">Cairo</option>
                     <option value="Johannesburg">Johannesburg</option>
                     <option value="Nairobi">Nairobi</option>
                 </optgroup>
             </select>
             
-            <label for="method">Chọn phương pháp:</label>
+            <label for="method">Select Method:</label>
             <select id="method" name="method">
                 <option value="isolation_forest">Isolation Forest</option>
                 <option value="dbscan">DBSCAN</option>
                 <option value="autoencoder">Autoencoder</option>
             </select>
             
-            <button type="submit">Lấy dữ liệu</button>
+            <button type="submit">Fetch Data</button>
         </form>
-        <a href="/">Quay lại</a>
+        <a href="/">Back</a>
 
     </div>
 </body>
